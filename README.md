@@ -138,5 +138,9 @@ The output is the following:
 
 and the full output table can be found [here](Part_1_Cohort_Retention.csv)
 
+## Visualization:
+The visualiasation the cohort is made with tableau. The dashboard can be found via this link: [Cohort_retention]([Part_1_Cohort_Retention.csv](https://public.tableau.com/app/profile/alexis/viz/Cohort_retention_17016768706120/Dashboard1)https://public.tableau.com/app/profile/alexis/viz/Cohort_retention_17016768706120/Dashboard1)
+
+
 
 
