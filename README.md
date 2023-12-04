@@ -138,5 +138,5 @@ The output is the following:
 
 and the full output table can be found [here](20231204_Cohort_Analysis/Part_1_Cohort_Retention.csv)
 
-https://github.com/jaguara01/20231204_Cohort_Analysis/blob/main/Part_1_Cohort_Retention.csv
+
 
