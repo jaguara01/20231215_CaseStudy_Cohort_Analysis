@@ -1,5 +1,36 @@
-# 20231204_Cohort_Analysis
+# 20231204 Cohort Analysis Case
 
+
+AB Gaming is a digital gaming platform that offers a wide variety of games available
+under monthly subscriptions. There are 3 different plans, labeled SMALL, MEDIUM and
+LARGE, and can be paid in USD or EUR.
+You are provided with 2 datasets:
+- sales.csv: contains the sales of clients acquired since 2019-01-01. Data was
+extracted on 2020-12-31. This dataset includes a unique identifier for each user
+(account_id).
+- user_activity.csv: this dataset contains the following user characteristics as well
+as their unique identifier (same as in sales.csv):
+	- gender: gender of user reported in their profile.
+	-  age: age in completed years of the user at the beginning of their subscription.
+	- type: device type the user has installed the gaming platform.
+	- genre1: most played game genre by the user.
+	- genre2: second most played game genre by the user.
+	- hours: mean number of hours played by the user weekly.
+	- games: median number of different games played by the user weekly
+
+## Part 1: 
+Use sales.csv dataset to perform a monthly cohort analysis of subscribers.
+In a cohort analysis the data set is broken down into related groups rather than looking
+at all users as one unit. These related groups, or cohorts, usually share common
+characteristics or experiences within a defined time-span (taken from Wikipedia).
+In this case we want to group users by the month of their initial purchase.
+- What products have higher retention?
+- Is there any difference between subscribers using the 2 currencies?
+
+Deliverables:
+- SQL queries that allow us to make a monthly cohort analysis.
+- Create a chart showing the cohort
+  
 Before going throught the analysis, we want to realize some basic checks.
 
 ### Check unicity in term of plans and currency
@@ -21,9 +52,34 @@ SELECT distinct account_id,
         currency
  having count(*) > 1;
 ```
-No dupplicates were found. None of the users have subscribed to multiple plan or with multiple currency.
+No dupplicates were found. None of the users have subscribed to multiple plans or with multiple currencies. They don't switch from an plan to another one.
 
+### Check unicity in term of transaction per month per user
+```SQL
+with dist AS
+(
+SELECT distinct account_id,
+		DATE_PART('YEAR', to_date(start_date,'YYYY-MM-DD')) AS YEAR,
+  		DATE_PART('MONTH', to_date(start_date,'YYYY-MM-DD')) AS MONTH
+ from sales
+  )
+  SELECT account_id,
+		YEAR,
+        MONTH,
+        count(*)
+  from DIST
+  group by account_id,
+  		YEAR,
+		MONTH
+ having count(*) = 1
+ order by account_id, year, month;
+ ```
+No dupplicates were found, the users have a maximum of one subscription per month. They don't change in the month of their plan.
 
+## Monthly cohort analysis 
+
+The following query take as an input the SALES table and produce a monthly cohort analysis. 
+By default, we have an output of the entire set of data. By uncommenting some part of the code, we can have a representation by type of plans or by Currency.
 ```SQL
  with cohort_items as (
   select
