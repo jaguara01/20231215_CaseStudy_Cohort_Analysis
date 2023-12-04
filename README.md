@@ -178,7 +178,7 @@ the following query confirm our observations:
 
 ### Subscription plans:
 We observe that the SMALL plan is the one attracting the most people and the LARGE plan is the one with the least number of subscription.
-We see also the the retention rate is decreasing faster within the MEDIUM and LARGE plans.
+We can also conclude the the SMALL plan is the one with the highest rentention rate over time.
 
 ![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/a59e6e6b-9719-4afb-ad3c-08a8f97ed946)
 
