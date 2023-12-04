@@ -131,3 +131,12 @@ cohort_retention AS
         
         
 ```
+
+The output is the following:
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/783ddaa1-1b48-4abc-a622-5504128a4cb5)
+
+and the full output table can be found [here](./abc/test.md)
+
+https://github.com/jaguara01/20231204_Cohort_Analysis/blob/main/Part_1_Cohort_Retention.csv
+
