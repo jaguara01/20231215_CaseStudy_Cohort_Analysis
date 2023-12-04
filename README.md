@@ -139,16 +139,20 @@ The output is the following:
 and the full output table can be found [here](Part_1_Cohort_Retention.csv)
 
 ## Visualization:
-The visualiasation the cohort is made with tableau. The dashboard can be found via this link: [Cohort_retention]([Part_1_Cohort_Retention.csv](https://public.tableau.com/app/profile/alexis/viz/Cohort_retention_17016768706120/Dashboard1)https://public.tableau.com/app/profile/alexis/viz/Cohort_retention_17016768706120/Dashboard1)
-
+The visualiasation the cohort is made with tableau. The dashboard can be found via this link: [Cohort_retention](https://public.tableau.com/app/profile/alexis/viz/Cohort_retention_17016768706120/Dashboard1)
 
 ![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/6200f3a3-4182-4758-b42b-9036fb300420)
+
+### Currency
+Here is a visualization for each currency. We can see that the retention rate is often slightly better in USD than in EUR.
+
+We also observe that information about returning clients are missing in the currency EUR for the last two months (2020-11 and 2020-12). This can be explain by a problem while collecting data or a delay in the data coming from the european market.
 
 ![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/c160937b-b645-4944-865b-4b6ab4dae84c)
 
 ![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/1e844678-edfb-41c6-aa2a-5bb4418c730f)
 
-![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/49a2c91e-1e2a-4253-ac83-1af874c801ca)
+
 
 
 
