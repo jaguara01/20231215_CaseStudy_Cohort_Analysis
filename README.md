@@ -152,6 +152,40 @@ We also observe that information about returning clients are missing in the curr
 
 ![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/1e844678-edfb-41c6-aa2a-5bb4418c730f)
 
+the following query confirm our observations:
+
+```SQL
+
+ with currency as
+ (
+ select CURRENCY,
+ 		SUBSTRING(MIN(start_date) OVER (PARTITION BY account_id),1,7) as cohort_dt,
+        SUBSTRING(start_date,1,7) as purchase_dt
+ from sales
+   )
+ SELECT cohort_dt,
+ 		purchase_dt,
+        sum(case when currency = 'EUR' THEN 1 ELSE 0 END) AS EUR,
+        sum(case when currency = 'USD' THEN 1 ELSE 0 END) AS USD
+  FROM currency
+  where purchase_dt in ('2020-11','2020-12')
+  group by cohort_dt,
+ 		purchase_dt
+
+```
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/562738b5-64f6-4402-a739-eb27650905e0)
+
+### Subscription plans:
+We observe that the SMALL plan is the one attracting the most people and the LARGE plan is the one with the least number of subscription.
+We see also the the retention rate is decreasing faster within the MEDIUM and LARGE plans.
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/a59e6e6b-9719-4afb-ad3c-08a8f97ed946)
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/3643a23c-cb7a-4c69-b207-c2a4d3cc9a50)
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/b7a21693-dcb5-4b96-b3b7-1dbc75f25bf8)
+
 
 
 
