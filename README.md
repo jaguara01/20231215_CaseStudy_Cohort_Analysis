@@ -71,7 +71,7 @@ SELECT distinct account_id,
   group by account_id,
   		YEAR,
 		MONTH
- having count(*) = 1
+ having count(*) > 1
  order by account_id, year, month;
  ```
 No dupplicates were found, the users have a maximum of one subscription per month. They don't change in the month of their plan.
