@@ -1,6 +1,126 @@
-# 20231215 Cohort Analysis Case
+# Subscription Cohort Analysis for AB Gaming
+
+Analyzed user subscription data for the digital gaming platform AB Gaming to perform a monthly cohort analysis, identifying key retention trends based on subscription plans and currency.
+
+## About The Project
+AB Gaming is a digital gaming platform offering monthly subscriptions. This project analyzes sales data from 2019-01-01 to 2020-12-31 to understand user retention.
+
+The primary goals were to:
+- Group users into monthly cohorts based on their first purchase date.
+- Calculate the monthly retention rate for each cohort.
+- Determine which subscription plans (SMALL, MEDIUM, LARGE) have the highest retention.
+- Compare retention rates between the two currencies (USD and EUR).
+
+## Tools Used
+- SQL
+- Tableau
+
+## Key Insights & Findings
+1. Subscription Plans:
+	- The SMALL plan attracts the most new users and has the highest retention rate over time.
+	- The LARGE plan has the lowest number of subscribers.
+
+2. Currency:
+	- The retention rate for users paying in USD is consistently higher than for those paying in EUR.
+	- There appears to be missing data for EUR transactions in the last two months of the dataset (Nov/Dec 2020), which may indicate a data collection issue.
+
+## Visualizations
+The full, interactive dashboard is available on Tableau Public:
+[View the Cohort Retention Dashboard](https://public.tableau.com/app/profile/alexis/viz/Cohort_retention_17016768706120/Dashboard1)
+
+<details>
+<summary>Click to see detailed visualizations</summary>
+	
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/6200f3a3-4182-4758-b42b-9036fb300420)
 
 
+### Currency
+Here is a visualization for each currency. We can see that the retention rate is often slightly better in USD than in EUR.
+
+We also observe that information about returning clients are missing in the currency EUR for the last two months (2020-11 and 2020-12). This can be explain by a problem while collecting data or a delay in the data coming from the european market.
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/c160937b-b645-4944-865b-4b6ab4dae84c)
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/1e844678-edfb-41c6-aa2a-5bb4418c730f)
+
+
+### Subscription plans:
+We observe that the SMALL plan is the one attracting the most people and the LARGE plan is the one with the least number of subscription.
+We can also conclude the the SMALL plan is the one with the highest rentention rate over time.
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/a59e6e6b-9719-4afb-ad3c-08a8f97ed946)
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/3643a23c-cb7a-4c69-b207-c2a4d3cc9a50)
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/b7a21693-dcb5-4b96-b3b7-1dbc75f25bf8)
+
+</details>
+
+### SQL Queries for Analysis
+The main query for generating the monthly cohort analysis is below. It calculates the cohort month, the cohort index, and the retention percentage.
+
+<details>
+<summary>Click to view the main SQL query</summary>
+	
+```SQL
+ with cohort_items as (
+  select
+        DISTINCT
+        account_id,
+        to_date(SUBSTRING(MIN(start_date) OVER (PARTITION BY account_id),1,7),'YYYY-MM') AS cohort_yymm -- Evaluate the cohort month
+  from sales
+),
+cohort_index AS
+(
+  select
+    A.account_id,
+    -- A.plan,
+    -- A.currency,
+
+    cohort_yymm,
+    (DATE_PART('YEAR', to_date(start_date,'YYYY-MM-DD')) - DATE_PART('YEAR', cohort_yymm)) * 12+
+    (DATE_PART('MONTH', to_date(start_date,'YYYY-MM-DD')) - DATE_PART('MONTH',cohort_yymm)) 
+     	AS cohort_index -- Cohort index as the difference between the initial purchase month and the purchase month
+  from sales A
+
+  left join cohort_items C 
+  	ON A.account_id = C.account_id
+    where 1=1
+  	-- and currency='USD'
+  	-- and plan = 'LARGE'
+
+  ),
+
+cohort_retention AS
+(
+  select --plan,
+  		--currency,
+  		cohort_yymm,
+  		cohort_index,
+        count(*) AS cohort_ret_nbr
+  		
+  from cohort_index
+  group by cohort_yymm,
+  		cohort_index
+  		-- ,currency
+  		-- ,plan
+  order by cohort_yymm,
+  		cohort_index
+ )
+ select *,
+ 		CAST(cohort_ret_nbr AS FLOAT)*100/(MAX(cohort_ret_nbr) OVER (PARTITION BY cohort_yymm)) AS cohort_ret_pct
+ from cohort_retention     
+```
+
+The output:
+
+![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/783ddaa1-1b48-4abc-a622-5504128a4cb5)
+
+and the full output table can be found [here](Part_1_Cohort_Retention.csv)
+</details>
+
+
+<!-- 
 AB Gaming is a digital gaming platform that offers a wide variety of games available
 under monthly subscriptions. There are 3 different plans, labeled SMALL, MEDIUM and
 LARGE, and can be paid in USD or EUR.
@@ -186,7 +306,7 @@ We can also conclude the the SMALL plan is the one with the highest rentention r
 
 ![image](https://github.com/jaguara01/20231204_Cohort_Analysis/assets/134049731/b7a21693-dcb5-4b96-b3b7-1dbc75f25bf8)
 
-
+-->
 
 
 
